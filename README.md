@@ -1,5 +1,6 @@
 # Analisador-Descendente
 
+`
 {
   "terminal": ["+", "*", "(", ")", "id", "$"],
   "nonterminal": ["E", "X", "T", "Y", "F"],
@@ -50,7 +51,7 @@
     }
   }
 }
-
+`
 -------------------
 
 id+id*id$
