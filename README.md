@@ -1,5 +1,7 @@
 # Analisador-Descendente
 
+
+
 id+id*id$
 
 E -> XT -> XYF -> XYid = XY

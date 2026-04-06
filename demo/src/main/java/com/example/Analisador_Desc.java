@@ -9,48 +9,79 @@ import java.util.regex.Pattern;
 
 public final class Analisador_Desc {
 
-  private Atributos atributos_gramatica;
+  private final Atributos atributos;
   private ArrayList<Token> tokens;
   private Stack<String> pilha_transicoes;
-
-  JSONReader reader = new JSONReader();
+  
+  Tratador reader = new Tratador();
 
   public Analisador_Desc() {
-    setAtributos();
-    setTokens();
+    this.atributos = reader.ler_atributos();
+    this.tokens = new ArrayList<>();
     setPilha();
   }
 
-  public void parser_preditivo(String entrada) {
-    //getPilha && tokens se refere à entrada, entretanto, um arraylist com todos os terminais (tokens) da linguagem
-    System.out.println(pilha_transicoes.toString());
+  public StringBuilder exibir_saida(String entrada) {
+    StringBuilder sb = new StringBuilder();
+    StringBuilder sb2 = this.parser(entrada);
+
+    sb.append("Input: ").append(entrada).append("\n");
+    if (getPilha().isEmpty()) {
+      sb.append("Status: true\n");
+    } else {
+      sb.append("Status: false\n");
+    }
+    sb.append("Stack: [\n").append(sb2).append("\n]\n\n");
+
+    System.out.println(sb.toString());
+    return sb;
+  }
+
+  // algoritmo que recebendo como entrada uma sentença x, emite como saída:
+  public StringBuilder parser(String entrada) {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append(pilha_transicoes).append(", ");
     this.tokens = this.analisar_entrada(entrada);
 
-    Map<String, Map<String, String>> tableM = getAtributos().getTableM();
+    Map<String, Map<String, String>> tableM = atributos.getTableM();
     String tabela_transicao;
 
     while(!tokens.isEmpty()) {
+      // Verificação caso o símbolo "$" de fato não possa aparecer na pilha de transições.
+      // Caso contrário, comente a condição abaixo, e descomente a linha "pilha_transicoes.push();" no método setPilha().
+      if (pilha_transicoes.isEmpty()) {
+        if (tokens.getFirst().getValue().equals("$")) {
+          // Por que -2? --> remove uma vírgula, procurar solução melhor para isso.
+          // this.tokens.remove(0);
+          sb.deleteCharAt(sb.length() - 2);
+        }
+
+        break;
+      }
+
       if (this.tokens.getFirst().getValue().equals(pilha_transicoes.peek())) {
         pilha_transicoes.pop();
-        System.out.println(pilha_transicoes.toString());
+
+        sb.append(pilha_transicoes).append(", ");
         tokens.remove(0);
 
-        // A ordem de condição deve ser essa, para que a string "null" possa aparecer na pilha, e assim,
-        // na string de saída, que indicará todas as variações/transições ocorridas na pilha.
-        // A situação "|| pilha_transicoes.peek().equals("id")" é capturada na primeira condição
+        // Quanto a transição for vazia:
       } else if (pilha_transicoes.peek().equals("null")) {
         pilha_transicoes.pop();
-        System.out.println(pilha_transicoes.toString());
+        
+        sb.append(pilha_transicoes).append(", ");
         
         // Caso o elemento no topo da pilha de transições seja um não-terminal
-      } else if (getAtributos().getNonTerminal().contains(pilha_transicoes.peek())) {
+      } else if (atributos.getNonTerminal().contains(pilha_transicoes.peek())) {
         
-        // Consultar tabela M
         tabela_transicao = tableM.get(pilha_transicoes.pop()).get(this.tokens.getFirst().getValue());
-        // System.out.println(pilha_transicoes.toString());
         
-        // Se cair nesta condição, a análise descendente deu erro.
         if (tabela_transicao == null) {
+          sb.append(pilha_transicoes);
+          sb.append(" Erro na análise sintática!\nCaractere não pertence à gramática: ").append(this.tokens.getFirst().getValue());
+          sb.append("\nLista de Tokens restantes: ").append(tokens.stream().map(Token::getValue).toList());
+
           tokens.clear();
         
           // Considerar outra opção, (E), null, "null", id
@@ -63,28 +94,36 @@ public final class Analisador_Desc {
             i--;
           }
 
-          System.out.println(pilha_transicoes.toString());
+          sb.append(pilha_transicoes).append(", ");
         } else {
-          // Código repetido, ja acessamos a tabela M acima.
-          // String topo_pi = tableM.get(pilha_transicoes.peek()).get(this.tokens.getFirst().getValue());
-
           // Armazena os terminais no topo da pilha de transicoes
           pilha_transicoes.push(tabela_transicao);
-          System.out.println(pilha_transicoes.toString());
-        }
 
-      }
-      
+          sb.append(pilha_transicoes).append(", ");
+        }
+      } 
     }
-    // System.out.println(pilha_transicoes.toString());
+
+    return sb;
   }
 
-  // Adicionar símbolo "$" ao final da entrada.
+  /**
+   * Analisa a string de entrada, e armazena os terminais encontrados em um ArrayList de Tokens.
+   * O ArrayList de Tokens é ordenado de acordo com o índice final do token na string de entrada,
+   * para que a ordem dos tokens seja a mesma da string de entrada.
+   * 
+   * @param entrada String de entrada a ser analisada.
+   * @return ArrayList de Tokens encontrados na string de entrada,
+   * ordenados de acordo com a posição na string de entrada.
+   */
   public ArrayList<Token> analisar_entrada(String entrada) {
-    ArrayList<String> terminal = getAtributos().getTerminal();
+    ArrayList<String> terminal = atributos.getTerminal();
     ArrayList<Token> tks = getTokens();
 
-    terminal.forEach(t -> {
+    entrada += "$";
+    String finalEntrada = entrada;
+
+    for (String t : terminal) {
       Pattern pattern = Pattern.compile(Pattern.quote(t));
       Matcher matcher = pattern.matcher(entrada);
 
@@ -92,39 +131,28 @@ public final class Analisador_Desc {
         Token tok = new Token(matcher.group(), matcher.end());
         tks.add(tok);
       }
-    });
 
-    // Pesquisar sobre comparator
-    tks.sort(Comparator.comparingInt(t -> t.getEnd()));
-    tks.add(new Token("$", entrada.length() + 1));
+      finalEntrada = finalEntrada.replaceAll(Pattern.quote(t), "");
+    }
+
+    tks.add(new Token(finalEntrada, entrada.indexOf(finalEntrada)));
+    tks.sort(Comparator.comparingInt(t -> t.getPosition()));
+
     return tks;
-  }
-
-  public Atributos getAtributos() {
-    return this.atributos_gramatica;
-  }
-
-  public void setAtributos() {
-    this.atributos_gramatica = reader.ler_atributos();
   }
 
   public ArrayList<Token> getTokens() {
     return tokens;
   }
 
-  public void setTokens() {
-    this.tokens = new ArrayList<>();
-  }
-
   public Stack<String> getPilha() {
-    
     return pilha_transicoes;
   }
 
   public void setPilha() {
     pilha_transicoes = new Stack<>();
-    pilha_transicoes.push("$");
-    pilha_transicoes.push(getAtributos().startElement());
+    //pilha_transicoes.push("$");
+    pilha_transicoes.push(atributos.startElement());
   }
   
 }

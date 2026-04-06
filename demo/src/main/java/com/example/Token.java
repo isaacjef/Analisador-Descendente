@@ -1,27 +1,19 @@
 package com.example;
 
 public class Token {
-  private String value;
-  private int end_index;
+  private final String value;
+  private final int position;
 
-  public Token(String value, int end_index) {
+  public Token(String value, int position) {
     this.value = value;
-    this.end_index = end_index;
+    this.position = position;
   }
 
   public String getValue() {
-      return value;
+    return value;
   }
 
-//   public void setValue(String value) {
-//       this.value = value;
-//   }
-
-  public int getEnd() {
-      return end_index;
+  public int getPosition() {
+    return position;
   }
-
-//   public void setEnd(int end_index) {
-//       this.end_index = end_index;
-//   }
 }
