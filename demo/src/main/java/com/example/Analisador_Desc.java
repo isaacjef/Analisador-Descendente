@@ -26,7 +26,7 @@ public final class Analisador_Desc {
     StringBuilder sb2 = this.parser(entrada);
 
     sb.append("Input: ").append(entrada).append("\n");
-    if (getPilha().isEmpty()) {
+    if (pilha_transicoes.isEmpty()) {
       sb.append("Status: true\n");
     } else {
       sb.append("Status: false\n");
@@ -37,7 +37,6 @@ public final class Analisador_Desc {
     return sb;
   }
 
-  // algoritmo que recebendo como entrada uma sentença x, emite como saída:
   public StringBuilder parser(String entrada) {
     StringBuilder sb = new StringBuilder();
 
@@ -52,40 +51,42 @@ public final class Analisador_Desc {
       // Caso contrário, comente a condição abaixo, e descomente a linha "pilha_transicoes.push();" no método setPilha().
       if (pilha_transicoes.isEmpty()) {
         if (tokens.getFirst().getValue().equals("$")) {
-          // Por que -2? --> remove uma vírgula, procurar solução melhor para isso.
-          // this.tokens.remove(0);
-          sb.deleteCharAt(sb.length() - 2);
+          sb.setLength(sb.length() - 2);
         }
 
         break;
       }
 
       if (this.tokens.getFirst().getValue().equals(pilha_transicoes.peek())) {
+        // Se o token for igual ao símbolo no topo da pilha de transições, desempilha o símbolo e remove o token da lista de tokens.
         pilha_transicoes.pop();
 
-        sb.append(pilha_transicoes).append(", ");
+        sb.append(pilha_transicoes);
         tokens.remove(0);
 
-        // Quanto a transição for vazia:
+        
       } else if (pilha_transicoes.peek().equals("null")) {
+        // Quanto a transição for o vazio ("null"):
         pilha_transicoes.pop();
         
-        sb.append(pilha_transicoes).append(", ");
+        sb.append(pilha_transicoes);
         
-        // Caso o elemento no topo da pilha de transições seja um não-terminal
+        
       } else if (atributos.getNonTerminal().contains(pilha_transicoes.peek())) {
-        
+        // Caso o elemento no topo da pilha de transições seja um não-terminal
         tabela_transicao = tableM.get(pilha_transicoes.pop()).get(this.tokens.getFirst().getValue());
         
         if (tabela_transicao == null) {
+          // Se não há símbolo para a transição entre os elementos (caractere não pertence à gramática), a tabela de transição é nula.
           sb.append(pilha_transicoes);
-          sb.append(" Erro na análise sintática!\nCaractere não pertence à gramática: ").append(this.tokens.getFirst().getValue());
+          sb.append(" Erro na análise sintática!\nCaractere não pertence à gramática ou transição inválida: ").append(this.tokens.getFirst().getValue());
+          sb.append("\nPilha de transições: ").append(pilha_transicoes);
           sb.append("\nLista de Tokens restantes: ").append(tokens.stream().map(Token::getValue).toList());
 
           tokens.clear();
         
-          // Considerar outra opção, (E), null, "null", id
         } else if (!tabela_transicao.equals("null") && !tabela_transicao.equals("id")) {
+          // Considerar outras opções, (E), null, "null", id
           int i = tabela_transicao.length();
 
           while(i > 0) {
@@ -94,14 +95,16 @@ public final class Analisador_Desc {
             i--;
           }
 
-          sb.append(pilha_transicoes).append(", ");
+          sb.append(pilha_transicoes);
         } else {
           // Armazena os terminais no topo da pilha de transicoes
           pilha_transicoes.push(tabela_transicao);
 
-          sb.append(pilha_transicoes).append(", ");
+          sb.append(pilha_transicoes);
         }
-      } 
+      }
+
+      sb.append(", ");
     }
 
     return sb;
@@ -118,7 +121,7 @@ public final class Analisador_Desc {
    */
   public ArrayList<Token> analisar_entrada(String entrada) {
     ArrayList<String> terminal = atributos.getTerminal();
-    ArrayList<Token> tks = getTokens();
+    ArrayList<Token> tks = this.tokens;
 
     entrada += "$";
     String finalEntrada = entrada;
@@ -135,18 +138,12 @@ public final class Analisador_Desc {
       finalEntrada = finalEntrada.replaceAll(Pattern.quote(t), "");
     }
 
-    tks.add(new Token(finalEntrada, entrada.indexOf(finalEntrada)));
+    if (!finalEntrada.equals("")) {
+      tks.add(new Token(finalEntrada, entrada.indexOf(finalEntrada)));
+    }
     tks.sort(Comparator.comparingInt(t -> t.getPosition()));
 
     return tks;
-  }
-
-  public ArrayList<Token> getTokens() {
-    return tokens;
-  }
-
-  public Stack<String> getPilha() {
-    return pilha_transicoes;
   }
 
   public void setPilha() {

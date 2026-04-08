@@ -18,7 +18,7 @@ public class Main {
     for (String line : input_lines) {
       Analisador_Desc analisador = new Analisador_Desc();
       StringBuilder result = analisador.exibir_saida(line);
-      // tratador.writeOutput(result);
+      tratador.writeOutput(result);
     }
   }
 }  
