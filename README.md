@@ -17,16 +17,15 @@
 <p align="center">
  <img width="392" height="155" alt="image" src="https://github.com/user-attachments/assets/8c548104-77b4-4335-85a0-fb10823b35ba" />
 </p>
-3º - Analisar caracteres do código .pix
 
-Método ler_pix()
-
-4º - Criar arquivo .csv da tabela de símbolos.
+3º - Entrada e método "analisar_entrada()"
 <p align="center">
- <img width="1214" height="666" alt="image" src="https://github.com/user-attachments/assets/20fd69ee-38fd-43d7-acf5-a3d4245273f9" />]
+ <img width="532" height="571" alt="image" src="https://github.com/user-attachments/assets/3de7f219-b92e-4cda-ab5f-f48c5484a600" />
 </p>
 
-5º - Criar arquivo .pixobj para todos os tokens.
+4º - Análise descendente: método "parser()"
 <p align="center">
- <img width="919" height="635" alt="image" src="https://github.com/user-attachments/assets/16c42470-2b33-4d6f-a3ab-1478ed3db774" />
+ <img width="369" height="23" alt="image" src="https://github.com/user-attachments/assets/dd54ba15-6de5-4cde-a8c6-280504170225" />
 </p>
+
+5º - Arquive de resultado: output.txt
