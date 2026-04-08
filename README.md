@@ -1,4 +1,4 @@
-<img width="388" height="95" alt="image" src="https://github.com/user-attachments/assets/3411e4cc-e7d6-4bd5-b0bb-e677c8921062" /># Analisador Descendente
+# Analisador Descendente
 
 **- Objetivo:** Ler uma entrada da linguagem, analisá-la com o auxílio da Tabela M de transições, por fim gerando um arquivo com o resultado da análise e transições da pilha.
 
@@ -15,8 +15,7 @@
 </p>
 2º - Pilha de Transições 
 <p align="center">
- <img width="307" height="25" alt="image" src="https://github.com/user-attachments/assets/2cd1f194-0b52-49ee-9b1e-31946553ffe7" />
- <img width="388" height="95" alt="image" src="https://github.com/user-attachments/assets/df04b434-9658-4550-9d03-dab4bd2fa1c9" />
+ <img width="392" height="155" alt="image" src="https://github.com/user-attachments/assets/8c548104-77b4-4335-85a0-fb10823b35ba" />
 </p>
 3º - Analisar caracteres do código .pix
 
