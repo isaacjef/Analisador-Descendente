@@ -26,8 +26,10 @@
 
 4º - Análise descendente: métodos "parser()" e "analisar_entrada()"
 <p align="center">
- <img width="369" height="23" alt="image" src="https://github.com/user-attachments/assets/dd54ba15-6de5-4cde-a8c6-280504170225" />
- <img width="532" height="571" alt="image" src="https://github.com/user-attachments/assets/3de7f219-b92e-4cda-ab5f-f48c5484a600" />
+ <img width="535" height="633" alt="image" src="https://github.com/user-attachments/assets/61806654-d86e-4ac3-ae86-fbb1436e78d5" />
 </p>
 
 5º - Arquive de resultado: output.txt
+<p align="center">
+ <img width="805" height="134" alt="image" src="https://github.com/user-attachments/assets/8db47974-a60d-483e-9344-f8ee464bc99f" />
+</p>
