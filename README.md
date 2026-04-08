@@ -18,15 +18,16 @@
  <img width="392" height="155" alt="image" src="https://github.com/user-attachments/assets/8c548104-77b4-4335-85a0-fb10823b35ba" />
 </p>
 
-3º - Entrada e método "analisar_entrada()"
+3º - Execução do programa e Entrada do usuário
 <p align="center">
  <img width="816" height="284" alt="image" src="https://github.com/user-attachments/assets/907c1265-0221-4cf0-b168-75af4f0248e0" />
- <img width="532" height="571" alt="image" src="https://github.com/user-attachments/assets/3de7f219-b92e-4cda-ab5f-f48c5484a600" />
+ <img width="445" height="209" alt="image" src="https://github.com/user-attachments/assets/eb837b26-cf52-4cf8-9073-b09166dedc00" />
 </p>
 
-4º - Análise descendente: método "parser()"
+4º - Análise descendente: métodos "parser()" e "analisar_entrada()"
 <p align="center">
  <img width="369" height="23" alt="image" src="https://github.com/user-attachments/assets/dd54ba15-6de5-4cde-a8c6-280504170225" />
+ <img width="532" height="571" alt="image" src="https://github.com/user-attachments/assets/3de7f219-b92e-4cda-ab5f-f48c5484a600" />
 </p>
 
 5º - Arquive de resultado: output.txt
