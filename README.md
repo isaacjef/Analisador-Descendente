@@ -20,6 +20,7 @@
 
 3º - Entrada e método "analisar_entrada()"
 <p align="center">
+ <img width="816" height="284" alt="image" src="https://github.com/user-attachments/assets/907c1265-0221-4cf0-b168-75af4f0248e0" />
  <img width="532" height="571" alt="image" src="https://github.com/user-attachments/assets/3de7f219-b92e-4cda-ab5f-f48c5484a600" />
 </p>
 
