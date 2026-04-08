@@ -5,7 +5,7 @@
 # 📜 Etapas do Programa
 
 <p align="center">
- <img width="1236" height="964" alt="image" src="https://github.com/user-attachments/assets/78337822-24b2-4e1a-81ec-e6eec5c7accd" />
+ <img width="1316" height="964" alt="image" src="https://github.com/user-attachments/assets/cfd0762f-71c2-4872-81a3-3f9851e8a29f" />
 </p>
 
 1º - Tabela M  e Classe Atributos
