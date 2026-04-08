@@ -1,42 +1,9 @@
-# Analisador-Descendente
+# Analisador Descendente
 
+**- Objetivo:** Ler uma entrada da linguagem, analisá-la com o auxílio da Tabela M de transições, por fim gerando um arquivo com o resultado da análise e transições da pilha.
 
+# 📜 Etapas do Programa
 
-id+id*id$
-
-E -> XT -> XYF -> XYid = XY
-
-+id*id$
-
-XY -> Xnull -> X -> XT+ = XT
-
-id*id$
-
-XT -> XYF -> XYid = XY
-
-*id$
-
-XY -> XYF* = XYF
-
-id$
-
-XYF -> XYid = XY
-
-$
-
-XY -> Xnull -> X
-
-
- [E], [X,T], [X,Y,F], [X,Y,id], [X,Y],
- [X,null], [X], [X, T, +], [X, T], [X, Y, F],
- [X, Y, id], [X, Y], [X, Y, F, *], [X, Y, F],
- [X, Y, id], [X, Y], [X, null], [X], [null], []
- 
-
- ---------------
- 
- var json = "{ \"terminal\": [\"+\", \"*\", \"(\", \")\", \"id\", \"$\"],";
-    json += " \"nonterminal\": [\"E\", \"X\", \"T\", \"Y\", \"F\"],";
-    json += " \"grammar\": {\"E\": [\"TX\"], \"X\": [\"+TX\", \"null\"], \"T\": [\"FY\"], \"Y\": [\"*FY\", \"null\"], \"F\": [\"(E)\", \"id\"]},";
-    json += " \"first\": {\"E\": [\"(\", \"id\"], \"X\": [\"+\", \"null\"], \"T\": [\"(\", \"id\"], \"Y\": [\"*\", \"null\"], \"F\": [\"(\", \"id\"]},";
-    json += " \"follow\": {\"E\": [\")\", \"$\"], \"X\": [\")\", \"$\"], \"T\": [\"+\", \")\", \"$\"], \"Y\": [\"+\", \")\", \"$\"], \"F\": [\"*\", \"+\", \")\", \"$\"]},";
+<p align="center">
+ <img width="1236" height="964" alt="image" src="https://github.com/user-attachments/assets/78337822-24b2-4e1a-81ec-e6eec5c7accd" />
+</p>
